@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/jinzhu/gorm"
+	"github.com/moisespsena-go/aorm"
 	_ "github.com/mattn/go-sqlite3"
 
 	"github.com/aghape/aghape/test/utils"
@@ -129,10 +129,10 @@ func TestStateCallbacks(t *testing.T) {
 
 	address1 := "I'm an address should be set when enter checkout"
 	address2 := "I'm an address should be set when exit checkout"
-	orderStateMachine.State("checkout").Enter(func(order interface{}, tx *gorm.DB) error {
+	orderStateMachine.State("checkout").Enter(func(order interface{}, tx *aorm.DB) error {
 		order.(*Order).Address = address1
 		return nil
-	}).Exit(func(order interface{}, tx *gorm.DB) error {
+	}).Exit(func(order interface{}, tx *aorm.DB) error {
 		order.(*Order).Address = address2
 		return nil
 	})
@@ -161,10 +161,10 @@ func TestEventCallbacks(t *testing.T) {
 		prevState, afterState string
 	)
 
-	orderStateMachine.Event("checkout").To("checkout").From("draft").Before(func(order interface{}, tx *gorm.DB) error {
+	orderStateMachine.Event("checkout").To("checkout").From("draft").Before(func(order interface{}, tx *aorm.DB) error {
 		prevState = order.(*Order).State
 		return nil
-	}).After(func(order interface{}, tx *gorm.DB) error {
+	}).After(func(order interface{}, tx *aorm.DB) error {
 		afterState = order.(*Order).State
 		return nil
 	})
@@ -189,7 +189,7 @@ func TestTransitionOnEnterCallbackError(t *testing.T) {
 		orderStateMachine = getStateMachine()
 	)
 
-	orderStateMachine.State("checkout").Enter(func(order interface{}, tx *gorm.DB) (err error) {
+	orderStateMachine.State("checkout").Enter(func(order interface{}, tx *aorm.DB) (err error) {
 		return errors.New("intentional error")
 	})
 
@@ -208,7 +208,7 @@ func TestTransitionOnExitCallbackError(t *testing.T) {
 		orderStateMachine = getStateMachine()
 	)
 
-	orderStateMachine.State("checkout").Exit(func(order interface{}, tx *gorm.DB) (err error) {
+	orderStateMachine.State("checkout").Exit(func(order interface{}, tx *aorm.DB) (err error) {
 		return errors.New("intentional error")
 	})
 
@@ -231,7 +231,7 @@ func TestEventOnBeforeCallbackError(t *testing.T) {
 		orderStateMachine = getStateMachine()
 	)
 
-	orderStateMachine.Event("checkout").To("checkout").From("draft").Before(func(order interface{}, tx *gorm.DB) error {
+	orderStateMachine.Event("checkout").To("checkout").From("draft").Before(func(order interface{}, tx *aorm.DB) error {
 		return errors.New("intentional error")
 	})
 
@@ -250,7 +250,7 @@ func TestEventOnAfterCallbackError(t *testing.T) {
 		orderStateMachine = getStateMachine()
 	)
 
-	orderStateMachine.Event("checkout").To("checkout").From("draft").After(func(order interface{}, tx *gorm.DB) error {
+	orderStateMachine.Event("checkout").To("checkout").From("draft").After(func(order interface{}, tx *aorm.DB) error {
 		return errors.New("intentional error")
 	})
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/jinzhu/gorm"
+	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
 	"github.com/aghape/audited"
 	"github.com/aghape/aghape/resource"
@@ -13,7 +13,7 @@ import (
 
 // StateChangeLog a model that used to keep state change logs
 type StateChangeLog struct {
-	gorm.Model
+	aorm.Model
 	ReferTable string
 	ReferID    string
 	From       string
@@ -23,7 +23,7 @@ type StateChangeLog struct {
 }
 
 // GenerateReferenceKey generate reference key used for change log
-func GenerateReferenceKey(model interface{}, db *gorm.DB) string {
+func GenerateReferenceKey(model interface{}, db *aorm.DB) string {
 	var (
 		scope         = db.NewScope(model)
 		primaryValues []string
@@ -37,7 +37,7 @@ func GenerateReferenceKey(model interface{}, db *gorm.DB) string {
 }
 
 // GetStateChangeLogs get state change logs
-func GetStateChangeLogs(model interface{}, db *gorm.DB) []StateChangeLog {
+func GetStateChangeLogs(model interface{}, db *aorm.DB) []StateChangeLog {
 	var (
 		changelogs []StateChangeLog
 		scope      = db.NewScope(model)
