@@ -1,7 +1,7 @@
 package transition
 
 import (
-	"github.com/aghape/db"
+	"github.com/ecletus/db"
 )
 
 type Plugin struct {

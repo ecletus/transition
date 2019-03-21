@@ -5,10 +5,10 @@ import (
 	"strings"
 
 	"github.com/moisespsena-go/aorm"
-	"github.com/aghape/admin"
-	"github.com/aghape/audited"
-	"github.com/aghape/aghape/resource"
-	"github.com/aghape/roles"
+	"github.com/ecletus/admin"
+	"github.com/ecletus/audited"
+	"github.com/ecletus/ecletus/resource"
+	"github.com/ecletus/roles"
 )
 
 // StateChangeLog a model that used to keep state change logs
